@@ -19,6 +19,12 @@ PUTS    MACRO string
         POP DX
 ENDM
 
+;quebra linha
+BRAKELINE MACRO
+    putc 0Dh
+    putc 0Ah
+ENDM
+
 
 ; gets the multi-digit SIGNED number from the keyboard,
 ; and stores the result in CX register:
