@@ -9,7 +9,7 @@ int main(void) {
 
     for (int i=2;i<=num/2;i++) {
         if (num % i == 0) {
-            divisores[count++] = i;
+            count++;
         }
     }
 
@@ -17,8 +17,10 @@ int main(void) {
         printf("%d eh primo\n", num);
     } else {
         printf("%d nao eh primo e tem como divisores ", num);
-        for (int i=0;i<count;i++) { 
-            printf("%d ", divisores[i]);
+        for (int i=2;i<=num/2;i++) { 
+            if(num%i==0){
+                printf("%d ", i);
+            }
         }
         printf("\n");
     }
