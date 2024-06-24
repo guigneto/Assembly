@@ -1,0 +1,1120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+   <HEAD>
+      <TITLE>8086 bios and dos interrupts (IBM PC)</TITLE>
+   </HEAD>
+   <BODY text=#000000 vLink=#0000ff aLink=#ff0000 link=#0000ff bgColor=#ffffff 
+      leftMargin=20 rightMargin=0>
+      <BR><!--  START INSERT --><FONT 
+         face=Verdana size=3><A name=top1>&nbsp; </A><FONT size=+1><B>The list of all 
+      interrupts that are currently supported by the 8086 assembler emulator.</B> 
+      <BR>These interrupts should be compatible will IBM PC and all generations of 
+      x86, original Intel 8086 and AMD compatible microprocessors, however Windows XP 
+      may overwrite some of the original interrupts. </FONT>
+      <HR>
+      <BR>Quick reference:<BR><BR>
+      <FONT face=Verdana>
+         <TABLE width="100%">
+            <TBODY>
+               <TR>
+                  <TD>
+                     <A href="#int10h_00h">INT 10h/00h</A><BR>
+                     <A href="#int10h_01h">INT 10h/01h</A><BR>
+                     <A href="#int10h_02h">INT 10h/02h</A><BR>
+                     <A href="#int10h_03h">INT 10h/03h</A><BR>
+                     <A href="#int10h_05h">INT 10h/05h</A><BR>
+                     <A href="#int10h_06h">INT 10h/06h</A><BR>
+                     <A href="#int10h_07h">INT 10h/07h</A><BR>
+                     <A href="#int10h_08h">INT 10h/08h</A><BR>
+                     <A href="#int10h_09h">INT 10h/09h</A><BR>
+                     <A href="#int10h_0Ah">INT 10h/0Ah</A><BR>
+                     <A href="#int10h_0Ch">INT 10h/0Ch</A><BR>
+                     <A href="#int10h_0Dh">INT 10h/0Dh</A><BR>
+                     <A href="#int10h_0Eh">INT 10h/0Eh</A><BR>
+                     <A href="#int10h_13h">INT 10h/13h</A><BR>
+                  </TD>
+                  <TD>
+                     <A href="#int10h_1003h">INT 10h/1003h</A><BR>
+                     <A href="#int11h">INT 11h</A><BR>
+                     <A href="#int12h">INT 12h</A><BR>
+                     <A href="#int13h_00h">INT 13h/00h</A><BR>
+                     <A href="#int13h_02h">INT 13h/02h</A><BR>
+                     <A href="#int13h_03h">INT 13h/03h</A><BR>
+                     <A href="#int15h_86h">INT 15h/86h</A><BR>
+                     <A href="#int16h_00h">INT 16h/00h</A><BR>
+                     <A href="#int16h_01h">INT 16h/01h</A><BR>
+                     <A href="#int19h">INT 19h</A><BR>
+                     <A href="#int1Ah_00h">INT 1Ah/00h</A><BR>
+                     <A href="#int20h">INT 20h</A><BR>
+                  </TD>
+                  <TD>
+                     <A href="#int21h">INT 21h</A><BR>
+                     <A href="#int21h_01h">INT 21h/01h</A><BR>
+                     <A href="#int21h_02h">INT 21h/02h</A><BR>
+                     <A href="#int21h_05h">INT 21h/05h</A><BR>
+                     <A href="#int21h_06h">INT 21h/06h</A><BR>
+                     <A href="#int21h_07h">INT 21h/07h</A><BR>
+                     <A href="#int21h_09h">INT 21h/09h</A><BR>
+                     <A href="#int21h_0Ah">INT 21h/0Ah</A><BR>
+                     <A href="#int21h_0Bh">INT 21h/0Bh</A><BR>
+                     <A href="#int21h_0Ch">INT 21h/0Ch</A><BR>
+                     <A href="#int21h_0Eh">INT 21h/0Eh</A><BR>
+                     <A href="#int21h_19h">INT 21h/19h</A><BR>
+                     <A href="#int21h_25h">INT 21h/25h</A><BR>
+                     <A href="#int21h_2Ah">INT 21h/2Ah</A><BR>
+                     <A href="#int21h_2Ch">INT 21h/2Ch</A><BR>
+                  </TD>
+                  <TD>
+                     <A href="#int21h_35h">INT 21h/35h</A><BR>
+                     <A href="#int21h_39h">INT 21h/39h</A><BR>
+                     <A href="#int21h_3Ah">INT 21h/3Ah</A><BR>
+                     <A href="#int21h_3Bh">INT 21h/3Bh</A><BR>
+                     <A href="#int21h_3Ch">INT 21h/3Ch</A><BR>
+                     <A href="#int21h_3Dh">INT 21h/3Dh</A><BR>
+                     <A href="#int21h_3Eh">INT 21h/3Eh</A><BR>
+                     <A href="#int21h_3Fh">INT 21h/3Fh</A><BR>
+                     <A href="#int21h_40h">INT 21h/40h</A><BR>
+                     <A href="#int21h_41h">INT 21h/41h</A><BR>
+                     <A href="#int21h_42h">INT 21h/42h</A><BR>
+                     <A href="#int21h_47h">INT 21h/47h</A><BR>
+                     <A href="#int21h_4Ch">INT 21h/4Ch</A><BR>
+                     <A href="#int21h_56h">INT 21h/56h</A><BR>
+                  </TD>
+                  <TD>
+                     <A href="#int33h_0000h">INT 33h/0000h</A><BR>
+                     <A href="#int33h_0001h">INT 33h/0001h</A><BR>
+                     <A href="#int33h_0002h">INT 33h/0002h</A><BR>
+                     <A href="#int33h_0003h">INT 33h/0003h</A><BR>
+                  </TD>
+               </TR>
+            </TBODY>
+         </TABLE>
+      </FONT>
+      <BR><BR>
+      <HR>
+      <BR>The short list of supported interrupts with descriptions:<BR><BR>
+      <A name=int10h_00h>&nbsp;</A> 
+      <HR>
+      <B>INT 10h</B> / <B>AH = 0</B> - set video mode.<BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>AL</B> = desired video mode.<BR><BR>these 
+         video modes are supported:<BR><BR><B>00h</B> - text mode. 40x25. 16 colors. 8 
+         pages.<BR><BR><B>03h</B> - text mode. 80x25. 16 colors. 8 
+         pages.<BR><BR><B>13h</B> - graphical mode. 40x25. 256 colors. 320x200 pixels. 
+         1 page. 
+      </BLOCKQUOTE>
+      example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>al</FONT>, 13h
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 0
+	<FONT color=#0000ff>int</FONT> 10h
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_01h>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AH = 01h</B> - set text-mode cursor shape.<BR>
+      <BLOCKQUOTE>
+         <I>input:</I><BR><B>CH</B> = cursor start line (bits 0-4) and 
+         options (bits 5-7).<BR><B>CL</B> = bottom cursor line (bits 0-4).<BR><BR>when 
+         bit 5 of CH is set to <B>0</B>, the cursor is visible. when bit 5 is <B>1</B>, 
+         the cursor is not visible. <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+         <PRE><FONT face=Terminal size=3>
+<FONT color=#008000>; hide blinking text cursor: </FONT>
+     	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ch</FONT>, 32
+     	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 1
+     	<FONT color=#0000ff>int</FONT> 10h
+
+<FONT color=#008000>; show standard blinking text cursor: </FONT>
+     	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ch</FONT>, 6
+     	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cl</FONT>, 7
+     	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 1
+     	<FONT color=#0000ff>int</FONT> 10h
+
+<FONT color=#008000>; show box-shaped blinking text cursor: </FONT>
+     	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ch</FONT>, 0
+     	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cl</FONT>, 7
+     	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 1
+     	<FONT color=#0000ff>int</FONT> 10h
+
+<FONT color=#008000>;     	note: some bioses required CL to be &gt;=7,
+;     	otherwise wrong cursor shapes are displayed. </FONT>
+</FONT></PRE>
+         <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_02h>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AH = 2</B> - set cursor position.<BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>DH</B> = row.<BR><B>DL</B> = 
+         column.<BR><B>BH</B> = page number (0..7).<BR>
+      </BLOCKQUOTE>
+      example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dh</FONT>, 10
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dl</FONT>, 20
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>bh</FONT>, 0
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 2
+	<FONT color=#0000ff>int</FONT> 10h
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_03h>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AH = 03h</B> - get cursor position and size.<BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>BH</B> = page 
+         number.<BR><I>return:</I><BR><B>DH</B> = row.<BR><B>DL</B> = 
+         column.<BR><B>CH</B> = cursor start line.<BR><B>CL</B> = cursor bottom 
+         line.<BR>
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_05h>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AH = 05h</B> - select active video page.<BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>AL</B> = new page number (0..7).<BR>the 
+         activated page is displayed. 
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_06h>&nbsp;</A> <A name=int10h_07h>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AH = 06h</B> - scroll up window.<BR><B>INT 10h</B> / <B>AH = 
+      07h</B> - scroll down window.<BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>AL</B> = number of lines by which to scroll 
+         (00h = clear entire window).<BR><B>BH</B> = <A 
+            href="#attrib">attribute</A> 
+         used to write blank lines at bottom of window.<BR><B>CH, CL</B> = row, column 
+         of window's upper left corner.<BR><B>DH, DL</B> = row, column of window's 
+         lower right corner.<BR>
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_08h>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AH = 08h</B> - read character and <A href="#attrib">attribute</A> at cursor position.<BR><BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>BH</B> = page 
+         number.<BR><I>return:</I><BR><B>AH</B> = <A href="#attrib">attribute</A>.<BR><B>AL</B> = character.<BR>
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_09h>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AH = 09h</B> - write character and <A href="#attrib">attribute</A> at cursor position.<BR><BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>AL</B> = character to display.<BR><B>BH</B> = 
+         page number.<BR><B>BL</B> = <A href="#attrib">attribute</A>.<BR><B>CX</B> = number of times to write character.<BR>
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_0Ah>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AH = 0Ah</B> - write character only at cursor 
+      position.<BR><BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>AL</B> = character to display.<BR><B>BH</B> = 
+         page number.<BR><B>CX</B> = number of times to write 
+         character.<BR>
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_0Ch>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AH = 0Ch</B> - change color for a single pixel.<BR><BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>AL</B> = pixel color<BR><B>CX</B> = 
+         column.<BR><B>DX</B> = row.<BR>
+      </BLOCKQUOTE>
+      example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>al</FONT>, 13h
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 0
+	<FONT color=#0000ff>int</FONT> 10h     <FONT color=#008000>; set graphics video mode. </FONT>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>al</FONT>, 1100b
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, 10
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dx</FONT>, 20
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 0ch
+	<FONT color=#0000ff>int</FONT> 10h     <FONT color=#008000>; set pixel. </FONT>
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_0Dh>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AH = 0Dh</B> - get color of a single pixel.<BR><BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>CX</B> = column.<BR><B>DX</B> = 
+         row.<BR><I>output:</I><BR><B>AL</B> = pixel color<BR>
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_0Eh>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AH = 0Eh</B> - teletype output.<BR><BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>AL</B> = character to write. </BLOCKQUOTE>
+      this 
+      functions displays a character on the screen, advancing the cursor and scrolling 
+      the screen as necessary. the printing is always done to current active page. 
+      <BR><BR>example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>al</FONT>, <FONT color=#800080>'a'</FONT>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 0eh
+	<FONT color=#0000ff>int</FONT> 10h
+
+	<FONT color=#008000>; note: on specific systems this
+	; function may not be supported in graphics mode. </FONT>
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_13h>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AH = 13h</B> - write string.<BR><BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>AL</B> = write mode:<BR>&nbsp; &nbsp; <B>bit 
+         0</B>: update cursor after writing;<BR>&nbsp; &nbsp; <B>bit 1</B>: string 
+         contains <A href="#attrib">attributes</A>.<BR><B>BH</B> = page number.<BR><B>BL</B> = <A href="#attrib">attribute</A> 
+         if string contains only characters (bit 1 of AL is zero).<BR><B>CX</B> = 
+         number of characters in string (attributes are not counted).<BR><B>DL,DH</B> = 
+         column, row at which to start writing.<BR><B>ES:BP</B> points to string to be 
+         printed. 
+      </BLOCKQUOTE>
+      example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>al</FONT>, 1
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>bh</FONT>, 0
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>bl</FONT>, 0011_1011b
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, msg1end <FONT color=#0064c8>-</FONT> <FONT color=#000064>offset</FONT> msg1 <FONT color=#008000>; calculate message size. </FONT>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dl</FONT>, 10
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dh</FONT>, 7
+	<FONT color=#0000ff>push</FONT> <FONT color=#800000>cs</FONT>
+	<FONT color=#0000ff>pop</FONT> <FONT color=#800000>es</FONT>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>bp</FONT>, <FONT color=#000064>offset</FONT> msg1
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 13h
+	<FONT color=#0000ff>int</FONT> 10h
+	<FONT color=#0000ff>jmp</FONT> msg1end
+	msg1 <FONT color=#000064>db</FONT> <FONT color=#800080>" hello, world! "</FONT>
+	msg1end:
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int10h_1003h>&nbsp;</A> 
+      <B>INT 10h</B> / <B>AX = 1003h</B> - toggle intensity/blinking.<BR><BR>
+      <BLOCKQUOTE><I>input:</I><BR><B>BL</B> = write mode:<BR>&nbsp; &nbsp; 
+         <B>0</B>: enable intensive colors.<BR>&nbsp; &nbsp; <B>1</B>: enable blinking 
+         (not supported by the emulator and windows command prompt).<BR><B>BH</B> = 0 
+         (to avoid problems on some adapters).<BR>
+      </BLOCKQUOTE>
+      example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ax</FONT>, 1003h
+<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>bx</FONT>, 0
+<FONT color=#0000ff>int</FONT> 10h
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <HR>
+      <A name=attrib>&nbsp;</A><BR><B>bit color table:</B><BR>character attribute is 8 
+      bit value, low 4 bits set fore color, high 4 bits set background color.<BR>note: 
+      the emulator and windows command line prompt do not support background blinking, 
+      however to make colors look the same in dos and in full screen mode it is 
+      required to turn off the background blinking.<BR>
+      <PRE><FONT face=Fixedsys>
+HEX    BIN        COLOR
+
+0      0000      black
+1      0001      blue
+2      0010      green
+3      0011      cyan
+4      0100      red
+5      0101      magenta
+6      0110      brown
+7      0111      light gray
+8      1000      dark gray
+9      1001      light blue
+A      1010      light green
+B      1011      light cyan
+C      1100      light red
+D      1101      light magenta
+E      1110      yellow
+F      1111      white
+</FONT></PRE>
+      note: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+<FONT color=#008000>; use this code for compatibility with dos/cmd prompt full screen mode: </FONT>
+<FONT color=#0000ff>mov</FONT>     <FONT color=#c80000>ax</FONT>, 1003h
+<FONT color=#0000ff>mov</FONT>     <FONT color=#c80000>bx</FONT>, 0   <FONT color=#008000>; disable blinking. </FONT>
+<FONT color=#0000ff>int</FONT>     10h
+
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int11h>&nbsp;</A> 
+      <BR><B>INT 11h</B> - get BIOS equipment list.<BR>
+      <BLOCKQUOTE>
+         <I>return:</I><BR><B>AX</B> = BIOS equipment list word, actually 
+         this call returns the contents of the word at 0040h:0010h.<BR><BR>Currently 
+         this function can be used to determine the number of installed number of 
+         floppy disk drives. 
+         <PRE><FONT face=Fixedsys>
+Bit fields for BIOS-detected installed hardware:
+bit(s)	Description
+ 15-14  Number of parallel devices.
+ 13     Reserved.
+ 12     Game port installed.
+ 11-9   Number of serial devices.
+ 8      Reserved.
+ 7-6    Number of floppy disk drives (minus 1):
+          00 single floppy disk;
+          01 two floppy disks;
+          10 three floppy disks;
+          11 four floppy disks.
+ 5-4    Initial video mode:
+          00 EGA,VGA,PGA, or other with on-board video BIOS;
+          01 40x25 CGA color.
+          10 80x25 CGA color (emulator default).
+          11 80x25 mono text.
+ 3      Reserved.
+ 2      PS/2 mouse is installed.
+ 1      Math coprocessor installed.
+ 0      Set when booted from floppy.
+</FONT></PRE>
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int12h>&nbsp;</A> 
+      <BR><B>INT 12h</B> - get memory size.<BR>
+      <BLOCKQUOTE><I>return:</I><BR><B>AX</B> = kilobytes of contiguous memory 
+         starting at absolute address 00000h, this call returns the contents of the 
+         word at 0040h:0013h. 
+      </BLOCKQUOTE>
+      <HR>
+      <BR><B>Floppy drives are emulated using</B> <I>FLOPPY_0(..3)</I> <B>files.</B> 
+      <BR><BR><A name=int13h_00h>&nbsp;</A> 
+      <HR>
+      <BR><B>INT 13h</B> / <B>AH = 00h</B> - reset disk system, (currently this call 
+      doesn't do anything). <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int13h_02h>&nbsp;</A> <A 
+         name=int13h_03h>&nbsp;</A> 
+      <BR><B>INT 13h</B> / <B>AH = 02h</B> - read disk sectors into memory.<BR><B>INT 
+      13h</B> / <B>AH = 03h</B> - write disk sectors.<BR>
+      <BLOCKQUOTE>
+         <I>input:</I><BR>
+         <BLOCKQUOTE><B>AL</B> = number of sectors to read/write (must be 
+            nonzero)<BR><B>CH</B> = cylinder number (0..79).<BR><B>CL</B> = sector 
+            number (1..18).<BR><B>DH</B> = head number (0..1).<BR><B>DL</B> = drive 
+            number (0..3 , for the emulator it depends on quantity of FLOPPY_ 
+            files).<BR><B>ES:BX</B> points to data 
+            buffer.<BR>
+         </BLOCKQUOTE>
+         <I>return:</I><BR>
+         <BLOCKQUOTE><B>CF</B> set on error.<BR><B>CF</B> clear if 
+            successful.<BR><B>AH</B> = status (0 - if successful).<BR><B>AL</B> = number 
+            of sectors transferred. <BR>
+         </BLOCKQUOTE>
+         Note: each sector has <B>512</B> 
+         bytes. 
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int15h_86h>&nbsp;</A> 
+      <BR><B>INT 15h</B> / <B>AH = 86h</B> - BIOS wait function. 
+      <BLOCKQUOTE>
+         <I>input:</I><BR>
+         <BLOCKQUOTE><B>CX:DX</B> = interval in microseconds 
+         </BLOCKQUOTE>
+         <I>return:</I><BR>
+         <BLOCKQUOTE><B>CF</B> clear if successful (wait interval 
+            elapsed),<BR><B>CF</B> set on error or when wait function is already in 
+            progress. 
+         </BLOCKQUOTE>
+         <BR><I>Note:</I> 
+         <BLOCKQUOTE>the resolution of the wait period is 977 microseconds on many 
+            systems (1 million microseconds - 1 second). <BR>Windows XP does not support 
+            this interrupt (always sets CF=1). 
+         </BLOCKQUOTE>
+      </BLOCKQUOTE>
+      <BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int16h_00h>&nbsp;</A> 
+      <BR><B>INT 16h</B> / <B>AH = 00h</B> - get keystroke from keyboard (no 
+      echo).<BR>
+      <BLOCKQUOTE>
+         <I>return:</I><BR>
+         <BLOCKQUOTE><B>AH</B> = BIOS scan code.<BR><B>AL</B> = ASCII 
+            character.<BR>(if a keystroke is present, it is removed from the keyboard 
+            buffer). 
+         </BLOCKQUOTE>
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int16h_01h>&nbsp;</A> 
+      <BR><B>INT 16h</B> / <B>AH = 01h</B> - check for keystroke in the keyboard 
+      buffer.<BR>
+      <BLOCKQUOTE>
+         <I>return:</I><BR>
+         <BLOCKQUOTE><B>ZF = 1</B> if keystroke is not available.<BR><B>ZF = 0</B> if 
+            keystroke available.<BR><B>AH</B> = BIOS scan code.<BR><B>AL</B> = ASCII 
+            character.<BR>(if a keystroke is present, it is not removed from the 
+            keyboard buffer). 
+         </BLOCKQUOTE>
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int19h>&nbsp;</A> 
+      <BR><B>INT 19h</B> - system reboot.<BR>
+      <BLOCKQUOTE>Usually, the BIOS will try to read sector 1, head 0, track 0 from 
+         drive <B>A:</B> to 0000h:7C00h. The emulator just stops the execution, to boot 
+         from floppy drive select from the menu: <B>'virtual drive' -&gt; 'boot from 
+         floppy'</B> 
+      </BLOCKQUOTE>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int1Ah_00h>&nbsp;</A> 
+      <BR><B>INT 1Ah</B> / <B>AH = 00h</B> - get system time.<BR>
+      <BLOCKQUOTE>
+         <I>return:</I><BR>
+         <BLOCKQUOTE><B>CX:DX</B> = number of clock ticks since 
+            midnight.<BR><B>AL</B> = midnight counter, advanced each time midnight 
+            passes.<BR>
+         </BLOCKQUOTE>
+      </BLOCKQUOTE>
+      notes:<BR>there are approximately 
+      <B>18.20648</B> clock ticks per second,<BR>and <B>1800B0h</B> per 24 hours. 
+      <BR><B>AL</B> is not set by the emulator. 
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int20h>&nbsp;</A> 
+      <BR><BR><B>INT 20h</B> - exit to operating system.<BR><BR><A 
+         name=int21h>&nbsp;</A> 
+      <HR>
+      <BR><BR><B><FONT size=+1>The short list of emulated <U>MS-DOS</U> interrupts -- 
+      INT 21h</FONT><BR><BR></B>
+      <HR>
+      <FONT size=+1>DOS file system is emulated in <B><FONT 
+         color=green>C:\emu8086\vdrive\x</FONT></B> (x is a drive 
+      letter)</FONT><BR><BR>If no drive letter is specified and current directory is 
+      not set, then <B><FONT color=green>C:\emu8086\MyBuild\</FONT></B> path is used 
+      by default. <B>FLOPPY_0,1,2,3</B> files are emulated independently from DOS file 
+      system. <BR><BR>For the emulator physical drive <B>A:</B> is this file 
+      <B>c:\emu8086\FLOPPY_0</B> (for BIOS interrupts: <B>INT 13h</B> and boot). 
+      <BR><BR>For DOS interrupts (<B>INT 21h</B>) drive <B>A:</B> is emulated in this 
+      subdirectory: <B>C:\emu8086\vdrive\a\</B> <BR><BR><FONT size=1>Note: DOS file 
+      system limits the file and directory names to 8 characters, extension is limited 
+      to 3 characters;<BR>example of a valid file name: <B>myfile.txt</B> (file name = 
+      6 chars, extension - 3 chars). extension is written after the dot, no other dots 
+      are allowed.</FONT>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_01h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=1</B> - read character from standard input, with 
+      echo, result is stored in <B>AL</B>.<BR>if there is no character in the keyboard 
+      buffer, the function waits until any key is pressed. <BR><BR>example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 1
+	<FONT color=#0000ff>int</FONT> 21h
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_02h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=2</B> - write character to standard 
+      output.<BR>entry: <B>DL</B> = character to write, after execution <B>AL = 
+      DL</B>. <BR><BR>example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 2
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dl</FONT>, <FONT color=#800080>'a'</FONT>
+	<FONT color=#0000ff>int</FONT> 21h
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_05h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=5</B> - output character to printer.<BR>entry: 
+      <B>DL</B> = character to print, after execution <B>AL = DL</B>. <BR><BR>example: 
+      <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 5
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dl</FONT>, <FONT color=#800080>'a'</FONT>
+	<FONT color=#0000ff>int</FONT> 21h
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_06h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=6</B> - direct console input or output. 
+      <BR><BR>parameters for output: <B>DL</B> = 0..254 (ascii code)<BR>parameters for 
+      input: <B>DL</B> = 255 <BR><BR>for output returns: AL = DL<BR>for input returns: 
+      <B>ZF</B> set if no character available and <B>AL = 00h</B>, <B>ZF</B> clear if 
+      character available.<BR><B>AL</B> = character read; buffer is cleared. 
+      <BR><BR>example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 6
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dl</FONT>, <FONT color=#800080>'a'</FONT>
+	<FONT color=#0000ff>int</FONT> 21h       <FONT color=#008000>; output character. </FONT>
+
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 6
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dl</FONT>, 255
+	<FONT color=#0000ff>int</FONT> 21h       <FONT color=#008000>; get character from keyboard buffer (if any) or set ZF=1. </FONT>
+
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_07h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=7</B> - character input without echo to AL.<BR>if 
+      there is no character in the keyboard buffer, the function waits until any key 
+      is pressed. <BR><BR>example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 7
+	<FONT color=#0000ff>int</FONT> 21h
+
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_09h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=9</B> - output of a string at <B>DS:DX</B>. 
+      String must be terminated by '<B>$</B>'. <BR><BR>example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+		<FONT color=#000064>org</FONT> 100h
+		<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dx</FONT>, <FONT color=#000064>offset</FONT> msg
+		<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 9
+		<FONT color=#0000ff>int</FONT> 21h
+		<FONT color=#0000ff>ret</FONT>
+		msg <FONT color=#000064>db</FONT> <FONT color=#800080>"hello world $"</FONT>
+
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_0Ah>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=0Ah</B> - input of a string to <B>DS:DX</B>, fist 
+      byte is buffer size, second byte is number of chars actually read. this function 
+      does <B>not</B> add '$' in the end of string. to print using <B>INT 21h</B> / 
+      <B>AH=9</B> you must set dollar character at the end of it and start printing 
+      from address <B>DS:DX + 2</B>. <BR><BR>example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+		<FONT color=#000064>org</FONT> 100h
+		<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dx</FONT>, <FONT color=#000064>offset</FONT> buffer
+		<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 0ah
+		<FONT color=#0000ff>int</FONT> 21h
+		<FONT color=#0000ff>jmp</FONT> print
+		buffer <FONT color=#000064>db</FONT> 10,?, 10 dup(<FONT color=#800080>' '</FONT>)
+		print:
+		<FONT color=#0000ff>xor</FONT> <FONT color=#c80000>bx</FONT>, <FONT color=#c80000>bx</FONT>
+		<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>bl</FONT>, buffer<FONT color=#0064c8>[</FONT>1<FONT color=#0064c8>]</FONT>
+		<FONT color=#0000ff>mov</FONT> buffer<FONT color=#0064c8>[</FONT><FONT color=#c80000>bx</FONT><FONT color=#0064c8>+</FONT>2<FONT color=#0064c8>]</FONT>, <FONT color=#800080>'$'</FONT>
+		<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dx</FONT>, <FONT color=#000064>offset</FONT> buffer <FONT color=#0064c8>+</FONT> 2
+		<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 9
+		<FONT color=#0000ff>int</FONT> 21h
+		<FONT color=#0000ff>ret</FONT>
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->the 
+      function does not allow to enter more characters than the specified buffer 
+      size.<BR>see also <B>int21.asm</B> in c:\emu8086\examples <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_0Bh>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=0Bh</B> - get input status; <BR>returns: <B>AL = 
+      00h</B> if no character available, <B>AL = 0FFh</B> if character is available. 
+      <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_0Ch>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=0Ch</B> - flush keyboard buffer and read standard 
+      input.<BR>entry: <B>AL</B> = number of input function to execute after flushing 
+      buffer (can be 01h,06h,07h,08h, or 0Ah - for other values the buffer is flushed 
+      but no input is attempted); other registers as appropriate for the selected 
+      input function. <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_0Eh>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 0Eh</B> - select default drive. <BR><BR>Entry: 
+      <B>DL</B> = new default drive (0=A:, 1=B:, etc) <BR><BR>Return: <B>AL</B> = 
+      number of potentially valid drive letters <BR><BR>Notes: the return value is the 
+      highest drive present. <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_19h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 19h</B> - get current default drive. 
+      <BR><BR>Return: AL = drive (0=A:, 1=B:, etc) <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_25h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=25h</B> - set interrupt vector;<BR>input: 
+      <B>AL</B> = interrupt number. <B>DS:DX</B> -&gt; new interrupt handler. 
+      <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_2Ah>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=2Ah</B> - get system date;<BR>return: <B>CX</B> = 
+      year (1980-2099). <B>DH</B> = month. <B>DL</B> = day. <B>AL</B> = day of week 
+      (00h=Sunday) <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_2Ch>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=2Ch</B> - get system time; <BR>return: <B>CH</B> 
+      = hour. <B>CL</B> = minute. <B>DH</B> = second. <B>DL</B> = 1/100 seconds. 
+      <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_35h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=35h</B> - get interrupt vector;<BR>entry: 
+      <B>AL</B> = interrupt number;<BR>return: <B>ES:BX</B> -&gt; current interrupt 
+      handler. <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_39h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 39h</B> - make directory.<BR>entry: <B>DS:DX</B> 
+      -&gt; ASCIZ pathname; zero terminated string, for example: <BR><!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+<FONT color=#000064>org</FONT> 100h
+<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dx</FONT>, <FONT color=#000064>offset</FONT> filepath
+<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 39h
+<FONT color=#0000ff>int</FONT> 21h
+
+<FONT color=#0000ff>ret</FONT>
+
+filepath <FONT color=#000064>DB</FONT> <FONT color=#800080>"C:\mydir"</FONT>, 0 	<FONT color=#008000>; path to be created. </FONT>
+<FONT color=#000064>end</FONT>
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT --><FONT 
+         size=1>the above code creates <B>c:\emu8086\vdrive\C\mydir</B> directory if run 
+      by the emulator.</FONT> <BR><BR>Return: <B>CF</B> clear if successful <B>AX</B> 
+      destroyed. <B>CF</B> set on error <B>AX</B> = error code.<BR>Note: all 
+      directories in the given path must exist except the last one. <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_3Ah>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 3Ah</B> - remove directory. <BR><BR>Entry: 
+      <B>DS:DX</B> -&gt; ASCIZ pathname of directory to be removed. <BR><BR>Return: 
+      <BR><BR><B>CF</B> is clear if successful, <B>AX</B> destroyed <B>CF</B> is set 
+      on error <B>AX</B> = error code. <BR><BR>Notes: directory must be empty (there 
+      should be no files inside of it). <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_3Bh>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 3Bh</B> - set current directory. <BR><BR>Entry: 
+      <B>DS:DX</B> -&gt; ASCIZ pathname to become current directory (max 64 bytes). 
+      <BR><BR>Return: <BR><BR><B>Carry Flag</B> is clear if successful, <B>AX</B> 
+      destroyed.<BR><B>Carry Flag</B> is set on error <B>AX</B> = error 
+      code.<BR>Notes: even if new directory name includes a drive letter, the default 
+      drive is not changed,<BR>only the current directory on that drive. <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_3Ch>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 3Ch</B> - create or truncate file. 
+      <BR><BR>entry: <BR><BR><B>CX</B> = file attributes: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+ <FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, 0       <FONT color=#008000>;  normal - no attributes. </FONT>
+ <FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, 1       <FONT color=#008000>;  read-only. </FONT>
+ <FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, 2       <FONT color=#008000>;  hidden. </FONT>
+ <FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, 4       <FONT color=#008000>;  system </FONT>
+ <FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, 7       <FONT color=#008000>;  hidden, system and read-only! </FONT>
+ <FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, 16      <FONT color=#008000>;  archive </FONT>
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT --><B>DS:DX</B> 
+      -&gt; ASCIZ filename. <BR><BR>returns: <BR><BR><B>CF</B> clear if successful, 
+      <B>AX</B> = file handle. <BR><B>CF</B> set on error <B>AX</B> = error code. 
+      <BR><BR><FONT color=red size=1><B>note: if specified file exists it is deleted 
+      without a warning.</B></FONT> <BR><BR>example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#000064>org</FONT> 100h
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 3ch
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, 0
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dx</FONT>, <FONT color=#000064>offset</FONT> filename
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 3ch
+	<FONT color=#0000ff>int</FONT> 21h
+	<FONT color=#0000ff>jc</FONT> err
+	<FONT color=#0000ff>mov</FONT> handle, <FONT color=#c80000>ax</FONT>
+	<FONT color=#0000ff>jmp</FONT> k
+	filename <FONT color=#000064>db</FONT> <FONT color=#800080>"myfile.txt"</FONT>, 0
+	handle <FONT color=#000064>dw</FONT> ?
+	err:
+	<FONT color=#008000>; .... </FONT>
+	k:
+	<FONT color=#0000ff>ret</FONT>
+
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_3Dh>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 3Dh</B> - open existing file. <BR><BR>Entry: 
+      <BR><BR><B>AL</B> = access and sharing modes: <BR><!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>al</FONT>, 0   <FONT color=#008000>; read </FONT>
+<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>al</FONT>, 1   <FONT color=#008000>; write </FONT>
+<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>al</FONT>, 2   <FONT color=#008000>; read/write </FONT>
+
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT --><BR><B>DS:DX</B> 
+      -&gt; ASCIZ filename. <BR><BR>Return: <BR><BR><B>CF</B> clear if successful, 
+      <B>AX</B> = file handle.<BR><B>CF</B> set on error <B>AX</B> = error code. 
+      <BR><BR>note 1: file pointer is set to start of file. <BR>note 2: file must 
+      exist. <BR><BR>example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#000064>org</FONT> 100h
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>al</FONT>, 2
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dx</FONT>, <FONT color=#000064>offset</FONT> filename
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 3dh
+	<FONT color=#0000ff>int</FONT> 21h
+	<FONT color=#0000ff>jc</FONT> err
+	<FONT color=#0000ff>mov</FONT> handle, <FONT color=#c80000>ax</FONT>
+	<FONT color=#0000ff>jmp</FONT> k
+	filename <FONT color=#000064>db</FONT> <FONT color=#800080>"myfile.txt"</FONT>, 0
+	handle <FONT color=#000064>dw</FONT> ?
+	err:
+	<FONT color=#008000>; .... </FONT>
+	k:
+	<FONT color=#0000ff>ret</FONT>
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_3Eh>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 3Eh</B> - close file. <BR><BR>Entry: <B>BX</B> = 
+      file handle <BR><BR>Return: <BR><BR><B>CF</B> clear if successful, <B>AX</B> 
+      destroyed. <BR><B>CF</B> set on error, <B>AX</B> = error code (06h). <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_3Fh>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 3Fh</B> - read from file. <BR><BR>Entry: 
+      <BR><BR><B>BX</B> = file handle. <BR><B>CX</B> = number of bytes to read. 
+      <BR><B>DS:DX</B> -&gt; buffer for data. <BR><BR>Return: <BR><BR><B>CF</B> is 
+      clear if successful - <B>AX</B> = number of bytes actually read; 0 if at EOF 
+      (end of file) before call. <BR><B>CF</B> is set on error <B>AX</B> = error code. 
+      <BR><BR>Note: data is read beginning at current file position, and the file 
+      position is updated after a successful read the returned <B>AX</B> may be 
+      smaller than the request in <B>CX</B> if a partial read occurred. <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_40h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 40h</B> - write to file. <BR><BR>entry: 
+      <BR><BR><B>BX</B> = file handle.<BR><B>CX</B> = number of bytes to 
+      write.<BR><B>DS:DX</B> -&gt; data to write. <BR><BR>return: <BR><BR><B>CF</B> 
+      clear if successful; <B>AX</B> = number of bytes actually written.<BR><B>CF</B> 
+      set on error; <B>AX</B> = error code. <BR><BR>note: if <B>CX</B> is zero, no 
+      data is written, and the file is truncated or extended to the current position 
+      data is written beginning at the current file position, and the file position is 
+      updated after a successful write the usual cause for 
+      <NOBR><B>AX</B> &lt; 
+         <B>CX</B>
+      </NOBR>
+      on return is a full disk. <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_41h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 41h</B> - delete file (unlink). <BR><BR>Entry: 
+      <BR><BR><B>DS:DX</B> -&gt; ASCIZ filename (no wildcards, but see notes). 
+      <BR><BR>return: <BR><BR><B>CF</B> clear if successful, <B>AX</B> destroyed. 
+      <B>AL</B> is the drive of deleted file (undocumented). <BR><B>CF</B> set on 
+      error <B>AX</B> = error code. <BR><BR>Note: DOS does not erase the file's data; 
+      it merely becomes inaccessible because the FAT chain for the file is cleared 
+      deleting a file which is currently open may lead to filesystem corruption. 
+      <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_42h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 42h</B> - SEEK - set current file position. 
+      <BR><BR>Entry: <BR><BR><B>AL</B> = origin of move: <B>0</B> - start of file. 
+      <B>1</B> - current file position. <B>2</B> - end of file. <BR><B>BX</B> = file 
+      handle. <BR><B>CX:DX</B> = offset from origin of new file position. 
+      <BR><BR>Return: <BR><BR><B>CF</B> clear if successful, <B>DX:AX</B> = new file 
+      position in bytes from start of file. <BR><B>CF</B> set on error, AX = error 
+      code. <BR><BR>Notes: <BR><BR>for origins <B>1</B> and <B>2</B>, the pointer may 
+      be positioned before the start of the file; no error is returned in that case, 
+      but subsequent attempts to read or write the file will produce errors. If the 
+      new position is beyond the current end of file, the file will be extended by the 
+      next write (see <A href="#int21h_40h">AH=40h</A>). 
+      <BR><BR>example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+	<FONT color=#000064>org</FONT> 100h
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 3ch
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, 0
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dx</FONT>, <FONT color=#000064>offset</FONT> filename
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 3ch
+	<FONT color=#0000ff>int</FONT> 21h  <FONT color=#008000>; create file... </FONT>
+	<FONT color=#0000ff>mov</FONT> handle, <FONT color=#c80000>ax</FONT>
+
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>bx</FONT>, handle
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dx</FONT>, <FONT color=#000064>offset</FONT> data
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, data_size
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 40h
+	<FONT color=#0000ff>int</FONT> 21h <FONT color=#008000>; write to file... </FONT>
+
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>al</FONT>, 0
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>bx</FONT>, handle
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, 0
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dx</FONT>, 7
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 42h
+	<FONT color=#0000ff>int</FONT> 21h <FONT color=#008000>; seek... </FONT>
+
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>bx</FONT>, handle
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>dx</FONT>, <FONT color=#000064>offset</FONT> buffer
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>cx</FONT>, 4
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 3fh
+	<FONT color=#0000ff>int</FONT> 21h <FONT color=#008000>; read from file... </FONT>
+
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>bx</FONT>, handle
+	<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ah</FONT>, 3eh
+	<FONT color=#0000ff>int</FONT> 21h <FONT color=#008000>; close file... </FONT>
+	<FONT color=#0000ff>ret</FONT>
+
+	filename <FONT color=#000064>db</FONT> <FONT color=#800080>"myfile.txt"</FONT>, 0
+	handle <FONT color=#000064>dw</FONT> ?
+	data <FONT color=#000064>db</FONT> <FONT color=#800080>" hello files! "</FONT>
+	data_size=$<FONT color=#0064c8>-</FONT><FONT color=#000064>offset</FONT> data
+	buffer <FONT color=#000064>db</FONT> 4 dup(<FONT color=#800080>' '</FONT>)
+
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_47h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 47h</B> - get current directory. <BR><BR>Entry: 
+      <BR><BR><B>DL</B> = drive number (00h = default, 01h = A:, etc) <BR><B>DS:SI</B> 
+      -&gt; 64-byte buffer for ASCIZ pathname. <BR><BR>Return: <BR><BR><B>Carry</B> is 
+      clear if successful <BR><B>Carry</B> is set on error, <B>AX</B> = error code 
+      (0Fh) <BR><BR>Notes: <BR><BR>the returned path does not include a drive and the 
+      initial backslash. <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_4Ch>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH=4Ch</B> - return control to the operating system 
+      (stop program). <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int21h_56h>&nbsp;</A> 
+      <BR><BR><B>INT 21h</B> / <B>AH= 56h</B> - rename file / move file. 
+      <BR><BR>Entry: <BR><BR><B>DS:DX</B> -&gt; ASCIZ filename of existing 
+      file.<BR><B>ES:DI</B> -&gt; ASCIZ new filename. <BR><BR>Return: 
+      <BR><BR><B>CF</B> clear if successful.<BR><B>CF</B> set on error, <B>AX</B> = 
+      error code. <BR><BR>Note: allows move between directories on same logical drive 
+      only; open files should not be renamed! <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int33h_0000h>&nbsp;</A> <BR>
+      <BR><BR><B><FONT size=+1>mouse driver interrupts -- INT 33h</FONT><BR><BR></B>
+      <HR>
+      <BR><BR><B>INT 33h</B> / <B>AX=0000</B> - mouse ininialization. any previous 
+      mouse pointer is hidden. <BR><BR>returns: 
+      <BLOCKQUOTE>if successful: <B>AX</B>=0FFFFh and <B>BX</B>=number of mouse 
+         buttons.<BR>if failed: <B>AX</B>=0 
+      </BLOCKQUOTE>
+      example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ax</FONT>, 0
+<FONT color=#0000ff>int</FONT> 33h
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->see 
+      also: mouse.asm in examples. <BR><BR>
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int33h_0001h>&nbsp;</A> 
+      <BR><BR><B>INT 33h</B> / <B>AX=0001</B> - show mouse pointer. <BR><BR>example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ax</FONT>, 1
+<FONT color=#0000ff>int</FONT> 33h
+
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int33h_0002h>&nbsp;</A> 
+      <BR><BR><B>INT 33h</B> / <B>AX=0002</B> - hide visible mouse pointer. 
+      <BR><BR>example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ax</FONT>, 2
+<FONT color=#0000ff>int</FONT> 33h
+
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <A name=int33h_0003h>&nbsp;</A> 
+      <BR><BR><B>INT 33h</B> / <B>AX=0003</B> - get mouse position and status of its 
+      buttons. <BR><BR>returns: 
+      <BLOCKQUOTE>if left button is down: <B>BX</B>=1<BR>if right button is down: 
+         <B>BX</B>=2<BR>if both buttons are down: <B>BX</B>=3<BR><B>CX</B> = 
+         x<BR><B>DX</B> = y 
+      </BLOCKQUOTE>
+      example: <!-- START AUTOMATIC ASM TO HTML EXPORT -->
+      <PRE><FONT face=Terminal size=3>
+<FONT color=#0000ff>mov</FONT> <FONT color=#c80000>ax</FONT>, 3
+<FONT color=#0000ff>int</FONT> 33h
+
+<FONT color=#008000>; note: in graphical 320x200 mode the value of CX is doubled.
+; see mouse2.asm in examples. </FONT>
+</FONT></PRE>
+      <!-- emu8086 version 3.27xn    --><!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+      <A href="#top1">
+         <P ALIGN="RIGHT"><FONT FACE="Verdana" SIZE=3><B>Back to top</B>
+      </A>
+      </FONT></P>
+      <HR>
+      <BR><BR>
+      <CENTER><FONT face=verdana size=1><A href="http://www.ibm.com/" 
+         target=_blank>IBM</A> ® is a registered trademark of IBM Corporation.<BR><A 
+         href="http://www.intel.com/" target=_blank>Intel</A> ® is a registered trademark 
+         of Intel Corporation.<BR><A href="http://www.amd.com/" target=_blank>AMD</A> ® 
+         is a registered trademark of AMD Corporation.<BR><A 
+            href="http://www.microsoft.com/" target=_blank>Microsoft</A> ® is a registered 
+         trademark of Microsoft Corporation.<BR>All other trademarks mentioned in the 
+         emu8086.com web pages<BR>are the property of their respective holders. 
+         </FONT>
+      </CENTER>
+   </BODY>
+</HTML>
