@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 int calculaPA(int a1,int an,int n){
     return ((a1+an)*n)/2;
