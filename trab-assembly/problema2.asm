@@ -97,7 +97,7 @@ espaco dw ' $'
 
 ;Variaveis
 numero dw ?
-contador db 0
+contador dw 0
 metade dw 2
 
 
