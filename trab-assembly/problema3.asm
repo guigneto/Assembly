@@ -22,11 +22,13 @@ MOV n,CX
 
 BRAKELINE
 
-CALL CALCULA_PA
+CALL CALCULA_PA ;Armazena o resultado em AX
 
 PUTS msgresult
-MOV AX, result
 CALL PRINT_NUM
+
+
+
 
 RET
 
@@ -41,7 +43,6 @@ msgresult db 'Resultado =  $'
 a1 dw ?
 an dw ?
 n dw ?
-result dw ?
 
 
 ;print char
@@ -73,8 +74,9 @@ ENDM
 
 
 ;Proc de calculo de PA
-CALCULA_PA PROC
-    PUSH AX
+;Resultado armazenado em AX
+CALCULA_PA PROC 
+    
     PUSH CX
     
     MOV AX, a1
@@ -85,12 +87,10 @@ CALCULA_PA PROC
     MOV CX, 2
     DIV CX
     
-    MOV result, AX
-    
-    POP CX
-    POP AX   
+    POP CX  
     
     RET
+    
 CALCULA_PA ENDP
     
 
@@ -314,4 +314,3 @@ end_print:
 PRINT_NUM_UNS   ENDP
 
 ten             DW      10 ; used as multiplier/divider by SCAN_NUM & PRINT_NUM_UNS.
-
