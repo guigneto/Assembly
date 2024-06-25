@@ -2,7 +2,6 @@
 
 int main(void) {
     int num, count = 0;
-    int divisores[100]; 
 
     printf("Digite um numero: ");
     scanf("%d", &num);
