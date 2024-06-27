@@ -13,9 +13,9 @@ int main(void) {
     }
 
     if (count == 0) { 
-        printf("Esse numero e primo.\n", num);
+        printf("Esse numero e primo.\n",);
     } else {
-        printf("Esse numero nao e primo.\nSeus divisores sao:  ", num);
+        printf("Esse numero nao e primo.\nSeus divisores sao:  ",);
         for (int i=2;i<=num/2;i++) { 
             if(num%i==0){
                 printf("%d ", i);
