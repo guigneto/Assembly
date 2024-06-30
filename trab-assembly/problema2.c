@@ -16,7 +16,7 @@ int main(void) {
         printf("Esse numero e primo.\n");
     } else {
         printf("Esse numero nao e primo.\nSeus divisores sao:  ");
-        for (int i=num/2;i>=0;i--) { 
+        for (int i=num/2;i>1;i--) { 
             if(num%i==0){
                 printf("%d ", i);
             }
