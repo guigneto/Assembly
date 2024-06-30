@@ -4,7 +4,7 @@ int main(void){
     
     int op, num1,num2;
 
-    printf("1 - Adicao\n2 - Subtracao\n3 - Multiplicacao\n4 - Divisao\n");
+    printf("1-Adicao 2-Subtracao 3-Multiplicacao 4-Divisao\n");
     
     printf("Digite uma operacao: ");
     scanf("%d",&op);
