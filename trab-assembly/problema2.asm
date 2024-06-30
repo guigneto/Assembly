@@ -51,14 +51,13 @@ not_primo:
 
         BREAKLINE
         PUTS msg_not_primo2
-        PUTS abre
 
         MOV AX, numero ; Insere o numero em AL
         MOV CX, metade ; Insere a metade do numero no contador
         JMP multiplos  ; Jump para encontrar e listar multiplos 
 
 multiplos: ; Loop mas nao e um loop
-        CMP CX, 1 ; Finaliza se o contador = 1
+        CMP CX, 0 ; Finaliza se o contador = 0
         JE stop_m ; 
 
         MOV DX, 0      ; Se resto 0 = Multiplo
@@ -72,7 +71,7 @@ multiplos: ; Loop mas nao e um loop
 print_multiplo:
         MOV AX, CX     ;
         CALL PRINT_NUM ; Imprime
-        PUTS espaco    ;
+        PUTC ' '   
         JMP decrementa ; Decrementa
 
 decrementa:
@@ -83,21 +82,17 @@ stop:
    RET ; Finaliza
 
 stop_m:
-   PUTS fecha ; Fecha couchete
    RET        ; Finaliza
 
 ;Prints
 msg db 'Insira um numero: $'
 msg_primo db 'Esse numero e primo. $'        
 msg_not_primo db 'Esse numero nao e primo. $'
-msg_not_primo2 db 'Seus multiplos sao: $'
-abre db '{ $'
-fecha db '} $'
-espaco dw ' $'
+msg_not_primo2 db 'Seus divisores sao: $'
 
 ;Variaveis
 numero dw ?
-contador dw 0
+contador db 0
 metade dw 2
 
 
