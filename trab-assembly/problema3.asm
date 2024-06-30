@@ -6,19 +6,19 @@ ORG 100h
 
 PUTS msg1
 CALL SCAN_NUM
-MOV a1, CX    
+PUSH CX    
 
 BRAKELINE
 
 PUTS msg2
 CALL SCAN_NUM
-MOV an, CX
+PUSH CX
 
 BRAKELINE
 
 PUTS msg3
 CALL SCAN_NUM
-MOV n,CX
+PUSH CX
 
 BRAKELINE
 
@@ -37,12 +37,6 @@ msg1 db 'Digite o primeiro termo: $'
 msg2 db 'Digite o ultimo termo: $'
 msg3 db 'Digite o numero de termos: $'
 msgresult db 'Resultado =  $'
-
-
-;Variaveis
-a1 dw ?
-an dw ?
-n dw ?
 
 
 ;print char
@@ -74,20 +68,22 @@ ENDM
 
 
 ;Proc de calculo de PA
-;Resultado armazenado em AX
-CALCULA_PA PROC 
+;Armazena resultado em AX
+CALCULA_PA PROC
+    POP SI; endereco de retorno 
     
-    PUSH CX
+    POP CX; n
+    POP BX; an  
+    POP AX; a1
     
-    MOV AX, a1
-    ADD AX, an
+    ADD AX, BX ;AX = a1+an
     
-    MUL n
+    MUL CX ;AX = AX*n
     
     MOV CX, 2
-    DIV CX
+    DIV CX ;AX = AX/2
     
-    POP CX  
+    PUSH SI  
     
     RET
     
