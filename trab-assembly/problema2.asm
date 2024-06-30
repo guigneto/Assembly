@@ -4,95 +4,96 @@
 
 ORG 100h
 
-PUTS msg1
+; Imprime 
+PUTS msg
+        
+; Input do numero
 CALL SCAN_NUM
-MOV num, CX
+MOV numero, CX ; armazena
+           
+; Checa se primo
 
-BRAKELINE
+    ; Calcula n/2
+    MOV DX, 0      ; Reseta o registrador com resto
+    MOV AX, numero ;
+    DIV metade     ;
 
-;nao da certo para valores 2,3,4,5
+    ; Salvando n/2
+    MOV metade, AX
 
-MOV CX, 0  ;cont divisoes
-MOV BX, 2  ;divisor
-MOV DX, 0  ;resto
+    ; Contador ate n/2
+    MOV CX, AX    
 
-loop_divisores:  
-    CMP AX, BX    ;compara variavel numero com divisor
-    JAE fim_loop  ;pula se maior ou igual
-    
-    MOV DX, 0     ;limpa o resto
-    MOV AX, num
-    DIV BX
-    
-    CMP DX, 0     ;compara se o resto deu zero
-    JNE proximo   ;se nao, vai para o prox
-    ;JE fim_loop
-    
-    INC CX        ;se sim, incrementa o cont
-    
-proximo:
-    INC BX        ;incrementa o divisor
-    JMP loop_divisores ;faz loop com divisor novo
-    
-fim_loop:
+    ; Loop para descobrir se Primo
+    p1: CMP CL, 1 ; Caso chegue ate 1 sem multiplos = Primo
+    JE primo
 
-CMP CX,0
-JNE nao_primo
-MOV AX, num
-CALL PRINT_NUM
-PUTS msgprimo
-JMP stop
+    ; Divisao com contador (CL)
+    MOV DX, 0      ; Reseta o resto
+    MOV AX, numero ; 
+    DIV CL         ;
 
-nao_primo:
-MOV AX, num
-CALL PRINT_NUM
-PUTS msgnaoprimo
+    CMP DX, 0    ; Se encontra um múltiplo = Nao e primo
+    JE not_primo ; 
 
-MOV AX, 0
-MOV CX, 0  ;cont divisoes
-MOV BX, 2  ;divisor
-MOV DX, 0  ;resto
+    loop p1
 
-loop_divisores2:
-    CMP AX, BX    ;compara variavel numero com divisor
-    JE stop  ;pula se igual
-    
-    MOV DX, 0     ;limpa o resto
-    MOV AX, num
-    DIV BX
-    
-    CMP DX, 0     ;compara se o resto deu zero
-    JNE proximo2   ;se nao, vai para o prox
-     
-    MOV AX,BX 
-    CALL PRINT_NUM ;se sim, printa o numero
-    PUTC ' '
-     
-    CMP AX,num
-    JAE stop
-    MOV AX, num
-    
-    
-proximo2:
-    MOV AX, num
-    INC BX        ;incrementa o divisor
-    JMP loop_divisores2 ;faz loop com divisor novo
+; Primo
+primo:
+        BREAKLINE
+        BREAKLINE
+        PUTS msg_primo ; Mensagem que o numero e primo
+   JMP stop
 
+not_primo:
+        BREAKLINE
+        PUTS msg_not_primo
 
+        BREAKLINE
+        PUTS msg_not_primo2
+
+        MOV AX, numero ; Insere o numero em AL
+        MOV CX, metade ; Insere a metade do numero no contador
+        JMP multiplos  ; Jump para encontrar e listar multiplos 
+
+multiplos: ; Loop mas nao e um loop
+        CMP CX, 0 ; Finaliza se o contador = 0
+        JE stop_m ; 
+
+        MOV DX, 0      ; Se resto 0 = Multiplo
+        MOV AX, numero ; 
+        DIV CX         ;
+
+        CMP DX, 0         ; Compara o resto com 0
+        JE print_multiplo ; Se multiplo, imprime o multiplo (CL) e decrementa CL
+        JNE decrementa    ; So decrementa CL
+
+print_multiplo:
+        MOV AX, CX     ;
+        CALL PRINT_NUM ; Imprime
+        PUTC ' '   
+        JMP decrementa ; Decrementa
+
+decrementa:
+     DEC CX        ; Decrementa CL
+     JMP multiplos ; Volta para multiplos
 
 stop:
-RET
+   RET ; Finaliza
 
+stop_m:
+   RET        ; Finaliza
 
 ;Prints
-msg1 db 'Digite um numero: $'
-msgprimo db ' eh primo$'
-msgnaoprimo db ' nao eh primo e tem como divisores $'
+msg db 'Insira um numero: $'
+msg_primo db 'Esse numero e primo. $'        
+msg_not_primo db 'Esse numero nao e primo. $'
+msg_not_primo2 db 'Seus divisores sao: $'
 
 ;Variaveis
-num dw ?
-cont dw ?
-two db 2
+numero dw ?
+contador db 0
+metade dw 2
 
 
 ;print char
@@ -113,14 +114,13 @@ PUTS    MACRO string
         int 21h 
         POP AX
         POP DX
-ENDM
+ENDM 
 
 ;quebra linha
-BRAKELINE MACRO
+BREAKLINE MACRO
     putc 0Dh
     putc 0Ah
 ENDM
-
 
 ; gets the multi-digit SIGNED number from the keyboard,
 ; and stores the result in CX register:
@@ -236,10 +236,6 @@ not_minus:
 make_minus      DB      ?       ; used as a flag.
 SCAN_NUM        ENDP
 
-
-
-
-
 ; this procedure prints number in AX,
 ; used with PRINT_NUM_UNS to print signed numbers:
 PRINT_NUM       PROC    NEAR
@@ -268,9 +264,6 @@ printed:
         POP     DX
         RET
 PRINT_NUM       ENDP
-
-
-
 
 ; this procedure prints out an unsigned
 ; number in AX (not just a single digit)

@@ -6,27 +6,29 @@ ORG 100h
 
 PUTS msg1
 CALL SCAN_NUM
-MOV a1, CX    
+PUSH CX    
 
 BRAKELINE
 
 PUTS msg2
 CALL SCAN_NUM
-MOV an, CX
+PUSH CX
 
 BRAKELINE
 
 PUTS msg3
 CALL SCAN_NUM
-MOV n,CX
+PUSH CX
 
 BRAKELINE
 
-CALL CALCULA_PA
+CALL CALCULA_PA ;Armazena o resultado em AX
 
 PUTS msgresult
-MOV AX, result
 CALL PRINT_NUM
+
+
+
 
 RET
 
@@ -35,13 +37,6 @@ msg1 db 'Digite o primeiro termo: $'
 msg2 db 'Digite o ultimo termo: $'
 msg3 db 'Digite o numero de termos: $'
 msgresult db 'Resultado =  $'
-
-
-;Variaveis
-a1 dw ?
-an dw ?
-n dw ?
-result dw ?
 
 
 ;print char
@@ -73,24 +68,25 @@ ENDM
 
 
 ;Proc de calculo de PA
+;Armazena resultado em AX
 CALCULA_PA PROC
-    PUSH AX
-    PUSH CX
+    POP SI; endereco de retorno 
     
-    MOV AX, a1
-    ADD AX, an
+    POP CX; n
+    POP BX; an  
+    POP AX; a1
     
-    MUL n
+    ADD AX, BX ;AX = a1+an
+    
+    MUL CX ;AX = AX*n
     
     MOV CX, 2
-    DIV CX
+    DIV CX ;AX = AX/2
     
-    MOV result, AX
-    
-    POP CX
-    POP AX   
+    PUSH SI  
     
     RET
+    
 CALCULA_PA ENDP
     
 
@@ -314,4 +310,3 @@ end_print:
 PRINT_NUM_UNS   ENDP
 
 ten             DW      10 ; used as multiplier/divider by SCAN_NUM & PRINT_NUM_UNS.
-
