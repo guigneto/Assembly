@@ -47,13 +47,15 @@ JZ divisao
 adicao:
     MOV AX, num1
     ADD AX, num2
+    JO overflow
     CALL PRINT_NUM
     JMP stop
     
 
 subtracao:
     MOV AX, num1
-    SUB AX, num2
+    ADD AX, num2
+    JO overflow
     CALL PRINT_NUM
     JMP stop
 
@@ -61,23 +63,30 @@ subtracao:
 multiplicacao:
     MOV AX, num1
     MUL num2
+    JO overflow
     CALL PRINT_NUM
     JMP stop
 
 divisao:
     MOV AX,num1
     DIV num2
+    JO overflow
     CALL PRINT_NUM
+    JMP stop
+    
+overflow:
+    PUTS msgoverflow
 
 stop:
 RET  
 
 ;Prints 
-msglist db '1-Adicao 2-Subtracao 3-Multiplicacao 4-Divisao$'
+msglist dw 'Add=1 Sub=2 Mul=3 Div=4$'
 msgop db 'Digite uma operacao: $' 
 msgnum1 db 'Digite um numero: $'
 msgnum2 db 'Digite outro numero: $'
 msgresult db 'Resultado = $ '
+msgoverflow db 'OVERFLOW$'
 
 ;Variaveis
 op dw ?
