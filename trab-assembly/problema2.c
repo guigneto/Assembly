@@ -1,25 +1,25 @@
 #include <stdio.h>
 
 int main(void) {
-    int num, count = 0;
+    int num, i, count = 0;
+    int divisores[100]; 
 
     printf("Digite um numero: ");
     scanf("%d", &num);
 
-    for (int i=2;i<=num/2;i++) {
+    // Verifica divisores de 2 até num/2
+    for (i = 2; i <= num / 2; i++) {
         if (num % i == 0) {
-            count++;
+            divisores[count++] = i; // Armazena o divisor e incrementa o contador
         }
     }
 
-    if (count == 0) { 
-        printf("Esse numero e primo.\n");
+    if (count == 0) { // Se count é 0, então num é primo
+        printf("%d eh primo\n", num);
     } else {
-        printf("Esse numero nao e primo.\nSeus divisores sao:  ");
-        for (int i=num/2;i>1;i--) { 
-            if(num%i==0){
-                printf("%d ", i);
-            }
+        printf("%d nao eh primo e tem como divisores ", num);
+        for (i = 0; i < count; i++) { // Imprime todos os divisores encontrados
+            printf("%d ", divisores[i]);
         }
         printf("\n");
     }
