@@ -4,12 +4,15 @@
 
 ORG 100h
 
+LEA SI, vet
+
 ; Imprime 
 PUTS msg
         
 ; Input do numero
 CALL SCAN_NUM
 MOV numero, CX ; armazena
+BREAKLINE
            
 ; Checa se primo
 
@@ -24,62 +27,64 @@ MOV numero, CX ; armazena
     ; Contador ate n/2
     MOV CX, AX    
 
-    ; Loop para descobrir se Primo
-    p1: CMP CX, 1 ; Caso chegue ate 1 sem divisores = Primo
-    JE primo
+    ; Loop para descobrir se Divisor
+    p1: 
+    CMP CX, 1 ; Caso chegue ate 1, acabaram as operacoes
+    JE exit
 
-    ; Divisao com contador (CL)
+    ; Divisao com contador (CX)
     MOV DX, 0      ; Reseta o resto
     MOV AX, numero ; 
     DIV CX         ;
-
-    CMP DX, 0    ; Se encontra um divisor = Nao e primo
-    JE not_primo ; 
-
-    loop p1 
     
-    ;faz um vetor cheio de 0, ao checar, se o primeiro for 0, entao ele eh primo
-    ;se for uma word tem q avancar de 2 em 2 bytes  
-      
-; Primo
+    
+    CMP DX, 0    ; Se encontra um divisor, salva no vetor
+    JE salvar_divisor 
+    
+    DEC CX
+    JMP p1
+    
+salvar_divisor: 
+
+    
+    MOV [SI], CX
+    
+    ADD SI, 2
+    
+    DEC CX
+    JMP p1
+ 
+exit:
+    LEA SI,vet
+    CMP [SI], 0 
+    JNE not_primo 
+    JE primo
+        
 primo:
-        BREAKLINE
-        BREAKLINE
-        PUTS msg_primo ; Mensagem que o numero e primo
-        JMP stop
+    PUTS msg_primo
+    JMP stop       
 
 not_primo:
-        BREAKLINE
-        PUTS msg_not_primo
+    PUTS msg_not_primo
 
-        BREAKLINE
-        PUTS msg_not_primo2
+    BREAKLINE
+    PUTS msg_not_primo2    
+ 
+   
+print_divisores:
 
-        MOV AX, numero ; Insere o numero em AX
-        MOV CX, metade ; Insere a metade do numero no contador
-        JMP divisores  ; Jump para encontrar e listar divisores 
-
-divisores: 
-        CMP CX, 1 ; Finaliza se o contador = 1
-        JE stop ; 
-
-        MOV DX, 0      ; Se resto 0 = Divisor
-        MOV AX, numero ; 
-        DIV CX         ;
-
-        CMP DX, 0         ; Compara o resto com 0
-        JE print_divisor ; Se divisor, imprime o divisor e decrementa CX
-        JNE decrementa    ; So decrementa CX
-
-print_divisor:
-        MOV AX, CX     ;
-        CALL PRINT_NUM ; Imprime
-        PUTC ' '   ;
-        JMP decrementa ; Decrementa
-
-decrementa:
-     DEC CX        ; Decrementa CX
-     JMP divisores ; Volta para divisores
+    CMP w.[SI], 0 
+    JE stop 
+    
+    MOV AX, [SI]
+    CALL PRINT_NUM
+    PUTC ' '
+    
+    ADD SI, 2
+    
+    JMP print_divisores    
+ 
+        
 
 stop:
    RET ; Finaliza
@@ -91,11 +96,10 @@ msg_primo db 'Esse numero e primo. $'
 msg_not_primo db 'Esse numero nao e primo. $'
 msg_not_primo2 db 'Seus divisores sao: $'
 
-
 ;Variaveis
 numero dw ?
-contador db 0
-metade dw 2
+metade dw 2 
+vet dw 50 dup(0)
 
 
 ;print char
