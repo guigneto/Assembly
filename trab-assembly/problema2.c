@@ -2,7 +2,7 @@
 
 int main(void) {
     int num, i, count = 0;
-    int divisores[100]; 
+    int divisores[50]; 
 
     printf("Digite um numero: ");
     scanf("%d", &num);
@@ -15,10 +15,10 @@ int main(void) {
     }
 
     if (count == 0) { // Se count é 0, então num é primo
-        printf("%d eh primo\n", num);
+        printf("Esse numero e primo.\n");
     } else {
-        printf("%d nao eh primo e tem como divisores ", num);
-        for (i = 0; i < count; i++) { // Imprime todos os divisores encontrados
+        printf("Esse numero nao e primo.\nSeus divisores sao: ");
+        for (i = count-1; i > 0; i--) { // Imprime todos os divisores encontrados
             printf("%d ", divisores[i]);
         }
         printf("\n");
