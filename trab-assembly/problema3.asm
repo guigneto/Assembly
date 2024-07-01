@@ -23,13 +23,16 @@ PUSH CX
 BRAKELINE
 
 CALL CALCULA_PA ;Armazena o resultado em AX
+JO overflow
 
 PUTS msgresult
 CALL PRINT_NUM
+JMP stop
 
+overflow:
+PUTS msgoverflow
 
-
-
+stop:
 RET
 
 ;String
@@ -37,6 +40,7 @@ msg1 db 'Digite o primeiro termo: $'
 msg2 db 'Digite o ultimo termo: $'
 msg3 db 'Digite o numero de termos: $'
 msgresult db 'Resultado =  $'
+msgoverflow db 'OVERFLOW$'
 
 
 ;print char
@@ -79,12 +83,14 @@ CALCULA_PA PROC
     ADD AX, BX ;AX = a1+an
     
     MUL CX ;AX = AX*n
+    JO PROCoverflow
     
     MOV CX, 2
     DIV CX ;AX = AX/2
-    
-    PUSH SI  
-    
+                     
+    PROCoverflow:                 
+    PUSH SI
+      
     RET
     
 CALCULA_PA ENDP
