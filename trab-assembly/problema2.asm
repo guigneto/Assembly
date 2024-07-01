@@ -36,8 +36,11 @@ MOV numero, CX ; armazena
     CMP DX, 0    ; Se encontra um divisor = Nao e primo
     JE not_primo ; 
 
-    loop p1
-
+    loop p1 
+    
+    ;faz um vetor cheio de 0, ao checar, se o primeiro for 0, entao ele eh primo
+    ;se for uma word tem q avancar de 2 em 2 bytes  
+      
 ; Primo
 primo:
         BREAKLINE
