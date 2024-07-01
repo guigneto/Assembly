@@ -25,15 +25,15 @@ MOV numero, CX ; armazena
     MOV CX, AX    
 
     ; Loop para descobrir se Primo
-    p1: CMP CL, 1 ; Caso chegue ate 1 sem multiplos = Primo
+    p1: CMP CX, 1 ; Caso chegue ate 1 sem divisores = Primo
     JE primo
 
     ; Divisao com contador (CL)
     MOV DX, 0      ; Reseta o resto
     MOV AX, numero ; 
-    DIV CL         ;
+    DIV CX         ;
 
-    CMP DX, 0    ; Se encontra um múltiplo = Nao e primo
+    CMP DX, 0    ; Se encontra um divisor = Nao e primo
     JE not_primo ; 
 
     loop p1
@@ -43,7 +43,7 @@ primo:
         BREAKLINE
         BREAKLINE
         PUTS msg_primo ; Mensagem que o numero e primo
-   JMP stop
+        JMP stop
 
 not_primo:
         BREAKLINE
@@ -52,43 +52,42 @@ not_primo:
         BREAKLINE
         PUTS msg_not_primo2
 
-        MOV AX, numero ; Insere o numero em AL
+        MOV AX, numero ; Insere o numero em AX
         MOV CX, metade ; Insere a metade do numero no contador
-        JMP multiplos  ; Jump para encontrar e listar multiplos 
+        JMP divisores  ; Jump para encontrar e listar divisores 
 
-multiplos: ; Loop mas nao e um loop
-        CMP CX, 0 ; Finaliza se o contador = 0
-        JE stop_m ; 
+divisores: 
+        CMP CX, 1 ; Finaliza se o contador = 1
+        JE stop ; 
 
-        MOV DX, 0      ; Se resto 0 = Multiplo
+        MOV DX, 0      ; Se resto 0 = Divisor
         MOV AX, numero ; 
         DIV CX         ;
 
         CMP DX, 0         ; Compara o resto com 0
-        JE print_multiplo ; Se multiplo, imprime o multiplo (CL) e decrementa CL
-        JNE decrementa    ; So decrementa CL
+        JE print_divisor ; Se divisor, imprime o divisor e decrementa CX
+        JNE decrementa    ; So decrementa CX
 
-print_multiplo:
+print_divisor:
         MOV AX, CX     ;
         CALL PRINT_NUM ; Imprime
-        PUTC ' '   
+        PUTC ' '   ;
         JMP decrementa ; Decrementa
 
 decrementa:
-     DEC CX        ; Decrementa CL
-     JMP multiplos ; Volta para multiplos
+     DEC CX        ; Decrementa CX
+     JMP divisores ; Volta para divisores
 
 stop:
    RET ; Finaliza
-
-stop_m:
-   RET        ; Finaliza
+   
 
 ;Prints
 msg db 'Insira um numero: $'
 msg_primo db 'Esse numero e primo. $'        
 msg_not_primo db 'Esse numero nao e primo. $'
 msg_not_primo2 db 'Seus divisores sao: $'
+
 
 ;Variaveis
 numero dw ?
