@@ -6,28 +6,28 @@ ORG 100h
 
 ;Imprime a lista
 PUTS msglist
-BRAKELINE
+BREAKLINE
 
 ;Imprime mensagem de operacao e escaneia op
 PUTS msgop
 CALL SCAN_NUM
 MOV op, CX 
 
-BRAKELINE
+BREAKLINE
 
 ;Imprime msgnum1 e escaneia num1
 PUTS msgnum1
 CALL SCAN_NUM
 MOV num1, CX
 
-BRAKELINE
+BREAKLINE
  
 ;Imprime msgnum2 e escaneia num2
 PUTS msgnum2
 CALL SCAN_NUM
 MOV num2, CX
 
-BRAKELINE
+BREAKLINE
 
 PUTS msgresult
 
@@ -114,7 +114,7 @@ PUTS    MACRO string
 ENDM 
 
 ;quebra linha
-BRAKELINE MACRO
+BREAKLINE MACRO
     putc 0Dh
     putc 0Ah
 ENDM
