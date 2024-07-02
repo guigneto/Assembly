@@ -74,6 +74,7 @@ ENDM
 ;Proc de calculo de PA
 ;Armazena resultado em AX
 CALCULA_PA PROC
+
     POP SI; endereco de retorno 
     
     POP CX; n
@@ -83,12 +84,12 @@ CALCULA_PA PROC
     ADD AX, BX ;AX = a1+an
     
     MUL CX ;AX = AX*n
-    JO PROCoverflow
+    JO exit
     
     MOV CX, 2
     DIV CX ;AX = AX/2
                      
-    PROCoverflow:                 
+    exit:                 
     PUSH SI
       
     RET
