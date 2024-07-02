@@ -14,7 +14,6 @@ CALL SCAN_NUM
 MOV numero, CX ; armazena
 BREAKLINE
            
-; Checa se primo
 
     ; Calcula n/2
     MOV DX, 0      ; Reseta o registrador com resto
@@ -28,7 +27,7 @@ BREAKLINE
     MOV CX, AX    
 
     ; Loop para descobrir se Divisor
-    p1: 
+    checa_divisor: 
     CMP CX, 1 ; Caso chegue ate 1, acabaram as operacoes
     JE exit
 
@@ -42,7 +41,7 @@ BREAKLINE
     JE salvar_divisor 
     
     DEC CX
-    JMP p1
+    JMP checa_divisor
     
 salvar_divisor: 
 
@@ -52,7 +51,7 @@ salvar_divisor:
     ADD SI, 2
     
     DEC CX
-    JMP p1
+    JMP checa_divisor
  
 exit:
     LEA SI,vet
@@ -91,7 +90,7 @@ stop:
    
 
 ;Prints
-msg db 'Insira um numero: $'
+msg db 'Digite um numero: $'
 msg_primo db 'Esse numero e primo. $'        
 msg_not_primo db 'Esse numero nao e primo. $'
 msg_not_primo2 db 'Seus divisores sao: $'
