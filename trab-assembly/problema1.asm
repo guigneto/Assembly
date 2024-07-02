@@ -81,7 +81,7 @@ stop:
 RET  
 
 ;Prints 
-msglist dw 'Add=1 Sub=2 Mul=3 Div=4$'
+msglist db '1-Adicao 2-Subtracao 3-Multiplicacao 4-Divisao$'
 msgop db 'Digite uma operacao: $' 
 msgnum1 db 'Digite um numero: $'
 msgnum2 db 'Digite outro numero: $'
