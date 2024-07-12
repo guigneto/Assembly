@@ -54,7 +54,7 @@ adicao:
 
 subtracao:
     MOV AX, num1
-    ADD AX, num2
+    SUB AX, num2
     JO overflow
     CALL PRINT_NUM
     JMP stop
